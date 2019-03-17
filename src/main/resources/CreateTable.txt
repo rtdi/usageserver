@@ -1,0 +1,28 @@
+mysql> create table connector (id INT(11) NOT NULL AUTO_INCREMENT primary key,
+    -> connectorname varchar(512),
+    -> sourceip varchar(128),
+    -> starttime timestamp,
+    ->  endtime timestamp);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> create table producer (id INT(11) NOT NULL AUTO_INCREMENT primary key,
+    -> connectorid  INT(11),
+    -> connectionname varchar(512),
+    -> producername varchar(512),
+    -> instance int,
+    -> lastdata timestamp,
+    -> pollcalls int,
+    -> rowsproduced bigint,
+    -> controllerstate varchar(128));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table consumer (id INT(11) NOT NULL AUTO_INCREMENT primary key,
+    -> connectorid  INT(11),
+    -> connectionname varchar(512),
+    -> consumername varchar(512),
+    -> instance int,
+    -> lastdata timestamp,
+    -> fetchcalls int,
+    -> rowsfetched bigint,
+    -> controllerstate varchar(128));
+Query OK, 0 rows affected (0.02 sec)
