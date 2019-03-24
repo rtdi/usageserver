@@ -9,6 +9,8 @@ public class UsageStatistics {
 	private long starttime;
 	private long endtime;
 	private String sourceip;
+	private String connectorjar;
+	private String apijar;
 
 	public UsageStatistics() {
 	}
@@ -53,6 +55,21 @@ public class UsageStatistics {
 		this.sourceip = sourceip;
 	}
 
+	public String getPipelineAPIjar() {
+		return apijar;
+	}
+
+	public void setPipelineAPIjar(String apijar) {
+		this.apijar = apijar;
+	}
+	
+	public String getConnectorjar() {
+		return connectorjar;
+	}
+
+	public void setConnectorjar(String connectorjar) {
+		this.connectorjar = connectorjar;
+	}
 
 	public static class ConnectionEntry {
 
