@@ -78,19 +78,21 @@ public class PostHandler implements RequestHandler<UsageStatistics, String> {
 								if (producer.getInstances() != null) {
 									int counter = 0;
 									for (ProducerInstanceEntry instance : producer.getInstances()) {
-										pstmt.setInt(1, id);
-										pstmt.setString(2, connection.getConnectionname());
-										pstmt.setString(3, producer.getProducername());
-										pstmt.setInt(4, counter++);
-										if (instance.getLastdatatimestamp() == 0) {
-											stmt.setNull(5, Types.TIMESTAMP);
-										} else {
-											pstmt.setTimestamp(5, new Timestamp(instance.getLastdatatimestamp()));
+										if (instance != null) {
+											pstmt.setInt(1, id);
+											pstmt.setString(2, connection.getConnectionname());
+											pstmt.setString(3, producer.getProducername());
+											pstmt.setInt(4, counter++);
+											if (instance.getLastdatatimestamp() == null || instance.getLastdatatimestamp() == 0) {
+												pstmt.setNull(5, Types.TIMESTAMP);
+											} else {
+												pstmt.setTimestamp(5, new Timestamp(instance.getLastdatatimestamp()));
+											}
+											pstmt.setInt(6, instance.getPollcalls());
+											pstmt.setLong(7, instance.getRowsproduced());
+											pstmt.setString(8, instance.getState());
+											pstmt.execute();
 										}
-										pstmt.setInt(6, instance.getPollcalls());
-										pstmt.setLong(7, instance.getRowsproduced());
-										pstmt.setString(8, instance.getState());
-										pstmt.execute();
 									}
 								}
 							}
@@ -100,19 +102,21 @@ public class PostHandler implements RequestHandler<UsageStatistics, String> {
 								if (consumer.getInstances() != null) {
 									int counter = 0;
 									for (ConsumerInstanceEntry instance : consumer.getInstances()) {
-										cstmt.setInt(1, id);
-										cstmt.setString(2, connection.getConnectionname());
-										cstmt.setString(3, consumer.getConsumername());
-										cstmt.setInt(4, counter++);
-										if (instance.getLastdatatimestamp() == 0) {
-											stmt.setNull(5, Types.TIMESTAMP);
-										} else {
-											cstmt.setTimestamp(5, new Timestamp(instance.getLastdatatimestamp()));
+										if (instance != null) {
+											cstmt.setInt(1, id);
+											cstmt.setString(2, connection.getConnectionname());
+											cstmt.setString(3, consumer.getConsumername());
+											cstmt.setInt(4, counter++);
+											if (instance.getLastdatatimestamp() == null || instance.getLastdatatimestamp() == 0) {
+												cstmt.setNull(5, Types.TIMESTAMP);
+											} else {
+												cstmt.setTimestamp(5, new Timestamp(instance.getLastdatatimestamp()));
+											}
+											cstmt.setInt(6, instance.getFetchcalls());
+											cstmt.setLong(7, instance.getRowsfetched());
+											cstmt.setString(8, instance.getState());
+											cstmt.execute();
 										}
-										cstmt.setInt(6, instance.getFetchcalls());
-										cstmt.setLong(7, instance.getRowsfetched());
-										cstmt.setString(8, instance.getState());
-										cstmt.execute();
 									}
 								}
 							}
@@ -123,6 +127,7 @@ public class PostHandler implements RequestHandler<UsageStatistics, String> {
 			conn.commit();
 		} catch (SQLException e) {
 			context.getLogger().log(e.getMessage());
+			e.printStackTrace();
 			return "saving data failed with error " + e.getMessage();
 		}
 		return "saved";
