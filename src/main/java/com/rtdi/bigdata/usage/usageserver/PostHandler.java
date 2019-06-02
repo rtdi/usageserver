@@ -37,7 +37,7 @@ public class PostHandler implements RequestHandler<UsageStatistics, String> {
 		}
 		try (
 			PreparedStatement stmt = conn.prepareStatement(
-					"insert into connector (connectorname, connector, api, sourceip, starttime, endtime) values (?,?,?,?,?,?)",
+					"insert into connector (connectorname, connector, api, sourceip, starttime, endtime, companyname) values (?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 			) {
 			stmt.setString(1, data.getConnectorname());
@@ -54,6 +54,7 @@ public class PostHandler implements RequestHandler<UsageStatistics, String> {
 			} else {
 				stmt.setTimestamp(6, new Timestamp(data.getEndtime()));
 			}
+			stmt.setString(7, data.getCompanyname());
 			stmt.execute();
 			ResultSet rs1 = stmt.getGeneratedKeys();
 			int id;

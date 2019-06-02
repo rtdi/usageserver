@@ -11,6 +11,7 @@ public class UsageStatistics {
 	private String sourceip;
 	private String connectorjar;
 	private String apijar;
+	private String companyname;
 
 	public UsageStatistics() {
 	}
@@ -69,6 +70,14 @@ public class UsageStatistics {
 
 	public void setConnectorjar(String connectorjar) {
 		this.connectorjar = connectorjar;
+	}
+
+	public String getCompanyname() {
+		return companyname;
+	}
+
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname;
 	}
 
 	public static class ConnectionEntry {
