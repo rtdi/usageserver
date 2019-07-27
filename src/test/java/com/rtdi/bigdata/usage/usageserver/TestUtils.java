@@ -64,9 +64,13 @@ public class TestUtils {
     /**
      * Helper method that parses a JSON object from a resource on the classpath
      * as an instance of the provided type.
+     * 
+     * @param <T> T
      *
      * @param resource the path to the resource (relative to this class)
      * @param clazz the type to parse the JSON into
+     * @return T
+     * @throws IOException in case of network errors
      */
     public static <T> T parse(String resource, Class<T> clazz)
             throws IOException {
